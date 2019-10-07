@@ -6,16 +6,18 @@
  * @flow
  */
 
-import React, { Component } from 'react';
-import { ListItens } from './src/components/ListItens'
-import {} from './src/commons/Router';
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
+import { MainScreen } from './src/components/MainScreen';
+import { ListItens } from './src/components/ListItens';
+import { Item } from './src/components/Item';
 
-export default class App extends Component {
+const App = createAppContainer(
+    createStackNavigator({
+        Main: MainScreen,
+        ListItens: ListItens        
+    })
+)
 
-  render() {
-    return (
-      <ListItens />
-    )
-  }
+export default App;
 
-}

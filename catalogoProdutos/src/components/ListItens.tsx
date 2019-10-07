@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
-import { ScrollView, View, Button, TextInput } from 'react-native';
+import { ScrollView, View, Button, TextInput, StatusBar } from 'react-native';
 import { Item } from './Item';
 import axios from 'axios';
-import { NavigationScreenProp, NavigationParams, NavigationState } from 'react-navigation';
-import {Teste} from './Teste'
 
-interface Props {
-    navigation: NavigationScreenProp<NavigationState, NavigationParams>;
- }
+interface Props { }
 
 interface State {
     listaItens: [];
@@ -17,7 +13,14 @@ interface State {
 export class ListItens extends Component<Props, State> {
 
     public static navigationOptions = {
-        title: 'Lista Itens',
+        title: 'Lista de Itens',
+        headerStyle: {
+            backgroundColor: 'white'
+        },
+        headerTitleStyle: {
+            fontWeight: 'bold',
+            color: 'skyblue'
+        },
     }
 
     constructor(props: Props) {
@@ -32,7 +35,7 @@ export class ListItens extends Component<Props, State> {
             }).catch(() => { console.log('Error') });
     }
 
-    searchItem(itemText: string): void {        
+    searchItem(itemText: string): void {
         this.setState((state: any) => {
             const listaItens = state.listaItens.filter((item: any) => item.titulo == itemText);
             state.listaItens = listaItens;
@@ -41,22 +44,22 @@ export class ListItens extends Component<Props, State> {
     }
 
     render() {
-        const { navigation } = this.props;
         return (
-            <ScrollView>
-                {/* <TextInput
-                    onChangeText={(itemText: string) => { this.setState({ itemText: itemText }) }}
-                    onSubmitEditing = {()=>{this.searchItem(this.state.itemText)}}
-                /> */}
-                <Button title='Pesquisar' onPress={() => {this.props.navigation.navigate('Teste');}} />
-                <View> 
-                    {                        
-                        this.state.listaItens.map((item, index) =>
-                        (<Item key={index} item={item} />))
-                    }
-                </View>
-            </ScrollView>
-
+            <View>                
+                <ScrollView>
+                    <TextInput
+                        onChangeText={(itemText: string) => { this.setState({ itemText: itemText }) }}
+                        onSubmitEditing={() => { this.searchItem(this.state.itemText) }}
+                    />
+                    <Button title='Pesquisar' onPress={() => { this.searchItem(this.state.itemText) }} />
+                    <View>
+                        {
+                            this.state.listaItens.map((item, index) =>
+                                (<Item key={index} item={item} />))
+                        }
+                    </View>
+                </ScrollView>
+            </View>
         )
     }
 }

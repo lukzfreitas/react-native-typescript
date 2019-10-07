@@ -9,7 +9,8 @@
       "moduleResolution": "node",
       "noEmit": true,
       "strict": true,
-      "target": "esnext"
+      "target": "esnext",
+      "types": ["react", "react-native", "jest"]
     },
     "exclude": [
       "node_modules",
