@@ -1,28 +1,47 @@
-import React, { Component } from 'react';
-import { View, Text, Image } from 'react-native';
-import { If } from '../commons/If';
-import { Style } from '../styles/styles';
+/**
+ * Sample React Native App
+ * https://github.com/facebook/react-native
+ *
+ * @format
+ * @flow
+ */
 
-export interface Props {
+import React, { Component } from 'react';
+import { View, Text } from 'react-native';
+import { Style } from '../styles/styles';
+import axios from 'axios';
+
+interface Props {
     item: any;
 }
 
-export class Item extends Component<Props> {
+interface State {
+    item: any;
+}
+
+export class Item extends Component<Props, State> {
 
     constructor(props: Props) {
         super(props);
+        this.state = { item: this.props.item };
+    }
+
+    getItem(): any {
+        return axios.get('http://faus.com.br/recursos/c/dmairr/api/itens.html')
+            .then(response => {
+                const result = response.data.filter((item: any) => {
+                    return item.titulo == this.state.item.titulo;
+                })
+            }).catch(() => { console.log('Error') });
     }
 
     render() {
         return (
-            <View style={Style.item}>
-                <If condition={this.props.item.valor < 200}>
-                    <Text style={Style.titleItem}>{this.props.item.titulo}</Text>
-                    <Text>Data: {this.props.item.data_publicacao}</Text>
-                    <Text>Cidade: {this.props.item.local_anuncio}</Text>
-                    <Text>Preço: {this.props.item.valor}</Text>
-                    <Image style={{ height: 100, width: 100 }} source={{ uri: this.props.item.foto }} />
-                </If>
+            <View>
+                <Text style={Style.titleItem}>{this.state.item.titulo}</Text>
+                <Text>Data: {this.state.item.data_publicacao}</Text>
+                <Text>Cidade: {this.state.item.local_anuncio}</Text>
+                <Text>Preço: {this.state.item.valor}</Text>
             </View >
         )
     }

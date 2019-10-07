@@ -1,5 +1,13 @@
+/**
+ * Sample React Native App
+ * https://github.com/facebook/react-native
+ *
+ * @format
+ * @flow
+ */
+
 import React, { Component } from 'react';
-import { View, StatusBar, Text, Button } from 'react-native'
+import { View, Button } from 'react-native'
 import { NavigationScreenProp, NavigationState, NavigationParams } from 'react-navigation';
 
 interface Props {
@@ -7,6 +15,10 @@ interface Props {
 }
 
 export class MainScreen extends Component<Props> {
+
+    constructor(props: Props) {
+        super(props);
+    }
 
     public static navigationOptions = {
         title: 'Página Principal',
@@ -22,9 +34,8 @@ export class MainScreen extends Component<Props> {
     render() {
         const { navigation } = this.props;
         return (
-            <View>
-                <StatusBar backgroundColor='skyblue' />
-                <Button title='Ir para Lista de itens' onPress={() => { navigation.navigate('ListItens') }} />
+            <View>                
+                <Button title='Ir para Lista de itens' onPress={() => { navigation.navigate('ListItens') }} />                
             </View>
 
         )
